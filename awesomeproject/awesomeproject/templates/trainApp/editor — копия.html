@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Редактор{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/editor.js' %}"></script>
+{% endblock %}
+
+{% block content %} 
+
+<div class="container">
+	    <h2>Конструктор</h2>
+		<form>
+		  {% csrf_token %}
+		  <div class="mb-3">
+			<h5 for="form-select" class="form-label"><strong>Направленность тренировки</strong></h5>
+			<select class="form-select">
+			  <option selected>Выберите из списка</option>
+			  <option value="1">Сила</option>
+			  <option value="2">Мышечная масса</option>
+			  <option value="3">Выносливость</option>
+			  <option value="3">Взрывная сила</option>
+			  <option value="3">Скорость</option>
+			</select>
+		  </div>
+		  <br>
+		  <div class="mb-3">
+			<h5 for="form-select" class="form-label"><strong>Упражнения группы один</strong></h5>
+			<select class="form-select">
+			  <option selected>Выберите из списка</option>
+			  <option value="1">Упражнение 1</option>
+			  <option value="2">Упражнение 2</option>
+			</select>
+			<br>
+			<label for="customRange1" class="form-label">Количество подходов</label>
+			<input type="range" class="form-range" id="customRange1">
+			<label for="customRange1" class="form-label">Количество в подходе</label>
+			<input type="range" class="form-range" id="customRange1">
+		  </div>
+		  <br>
+		  <div class="mb-3">
+			<h5 for="form-select" class="form-label"><strong>Упражнения группы два</strong></h5>
+			<select class="form-select">
+			  <option selected>Выберите из списка</option>
+			  <option value="1">Упражнение 1</option>
+			  <option value="2">Упражнение 2</option>
+			</select>
+			<br>
+			<label for="customRange1" class="form-label">Количество подходов</label>
+			<input type="range" class="form-range" id="customRange1">
+			<label for="customRange1" class="form-label">Количество в подходе</label>
+			<input type="range" class="form-range" id="customRange1">
+		  </div>
+		  <br>
+		  <button type="button" class="btn btn-primary">Добавить упражнение &oplus;</button>
+		  <br>
+		  <div class="mb-3">
+		  <br>
+			<label for="datetime-local"><strong>Введите дату тренировки</strong> </label>
+			<input type="datetime-local" id="datetime-local">
+		  </div>
+		  <br>
+		  <button type="submit" class="btn btn-primary">Сохранить тренировку</button>
+		</form>
+	</div>
+
+ {% endblock %}

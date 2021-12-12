@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Редактор{% endblock %}
+
+{% block content %} 
+
+<div class="container">
+		<h2>Конструктор</h2>
+		<br>
+		<form method = 'POST'>
+			<select class="form-select">
+				<option selected>Выберите тип тренировки:</option>
+				<option value="1">Стандартная</option>
+				<option value="2">Кроссфит</option>
+			</select>
+		</form>
+		
+</div>
+<script src="{% static 'js/choose.js' %}"></script>
+
+{% endblock %}
+

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %} 
+
+	<div class="container">
+	    <h2>Регистрация</h2>
+		<form>
+		  {% csrf_token %}
+		  <div class="mb-3">
+			<label for="exampleInputEmail1" class="form-label">Email</label>
+			<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+			<div id="emailHelp" class="form-text">Пример: ffff@something.something</div>
+		  </div>
+		  <div class="mb-3">
+			<label for="password1" class="form-label">Пароль</label>
+			<input type="password" class="form-control" id="exampleInputPassword1">
+		  </div>
+		  <div class="mb-3">
+			<label for="password2" class="form-label">Повторите пароль</label>
+			<input type="password" class="form-control" id="password2">
+		  </div>
+		  <div class="mb-3 form-check">
+			<input type="checkbox" class="form-check-input" id="exampleCheck1">
+			<label class="form-check-label" for="exampleCheck1">Не робот</label>
+		  </div>
+		  <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+		</form>
+	</div>
+
+ {% endblock %}

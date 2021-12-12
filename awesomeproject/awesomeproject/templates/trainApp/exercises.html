@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{%load static%}
+{% load thumbnail %}
+{% block title %}Каталог{% endblock %}
+
+{% block content %} 
+
+<div class="container">
+		<form method="POST">
+			<div class="input-group mb-3">
+			  <input id ='search' type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+			  <button id = 'searchButton' class="btn btn-outline-secondary btn-secondary text-white" type="button" id="button-addon1">Поиск &rArr;</button>
+			</div>
+		</form>
+		
+		<div class ="row" id = 'cardAr'>
+		
+			{% for exercise in exercise_list %}
+			
+				<div class="card w-75 col-md-3" >
+				  <div class="row g-0">
+					<div class="col-md-4">
+					  <img src="{{exercise.photo.card.url}}" class="img-fluid rounded-start">
+					</div>
+					<div class="col-md-8">
+					  <div class="card-body">
+						<h5 class="card-title">{{ exercise.name }}</h5>
+						<p class="card-text">{{ exercise.information| truncatewords:20 }}</p>
+						<a href="{% url 'editor' %}" class="btn btn-primary">Подробнее &raquo </a>
+					  </div>
+					</div>
+				  </div>
+				</div>
+
+			{% endfor %}
+			</div>
+		</div>
+	</div>		
+<script src="{% static 'js/exercises.js' %}"></script>
+ {% endblock %}

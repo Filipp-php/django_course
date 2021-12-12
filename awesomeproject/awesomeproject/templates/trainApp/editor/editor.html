@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Редактор{% endblock %}
+
+{% block content %} 
+
+<div class="container">
+	    <h2>Конструктор</h2>
+		<br>
+		{{wrkt_form.errors}}
+		<form method = 'POST'>
+		  {% csrf_token %}
+		  <div class="card mb-3">
+			  <h5 for="form-select" class="form-label"><strong>{{wrkt_form.name.label_tag}}</strong></h5>
+			  {{wrkt_form.name}}
+		  </div>
+		  
+		  <div class="card mb-3">
+			  <h5 for="form-select" class="form-label"><strong>{{wrkt_form.description.label_tag}}</strong></h5>
+			  {{wrkt_form.description}}
+		  </div>
+		  <div class="card mb-3">
+			  <h5 for="form-select" class="form-label"><strong>{{wrkt_form.data.label_tag}}</strong></h5>
+			  {{wrkt_form.data}}
+		  </div>
+		  {{wrkt_form.user}}
+		  
+			
+			<strong>{{wrkt_form.for_all.label_tag}}</strong>
+			{{wrkt_form.for_all}}
+			
+			<input id="username" type="hidden" value="{{request.user.id}}" />
+		  <br>
+		  <br>
+		  <input class = 'btn btn-primary' type="submit" value="Далее">
+		</form>
+		<br>
+		
+		<div class="card mb-3" hidden>
+			<h5 for="form-select" class="form-label"><strong>Выберите тип упражнений для вашей тренировки</strong></h5>
+			<select class="form-select" aria-label="typeW">
+				<option selected>Не выбрано</option>
+				<option value="1">Стандартные</option>
+				<option value="2">Кроссфит комплексы</option>
+			</select>
+		</div>
+		<form method = 'POST' hidden>
+		  {% csrf_token %}
+				<div class="card mb-3">
+					<h5 for="form-select" class="form-label"><strong>{{baseW_form.name.label_tag}}</strong></h5>
+					{{baseW_form.name}}
+				</div>
+			    <div class="card mb-3">
+				  <h5 for="form-select" class="form-label"><strong>{{baseW_form.exercise.label_tag}}</strong></h5>
+				  {{baseW_form.exercise}}
+			    </div>
+			    <div class="card mb-3">
+				  <h5 for="form-select" class="form-label"><strong>{{baseW_form.ex_number.label_tag}}</strong></h5>
+				  {{baseW_form.ex_number}}
+			    </div>
+			    <div class="card mb-3">
+				  <h5 for="form-select" class="form-label"><strong>{{baseW_form.sets.label_tag}}</strong></h5>
+				  {{baseW_form.sets}}
+			    </div> 
+			    <div class="card mb-3">
+				  <h5 for="form-select" class="form-label"><strong>{{baseW_form.quantity_in_set.label_tag}}</strong></h5>
+				  {{baseW_form.quantity_in_set}}
+			    </div>	  
+			    <div class="card mb-3">
+				  <h5 for="form-select" class="form-label"><strong>{{baseW_form.measurement.label_tag}}</strong></h5>
+				  {{baseW_form.measurement}}
+			    </div>	  
+			    <div class="card mb-3">
+				  <h5 for="form-select" class="form-label"><strong>{{baseW_form.rest.label_tag}}</strong></h5>
+				  {{baseW_form.rest}}
+			    </div>		
+			  <input class = 'btn btn-primary' type="submit" value="Далее">
+		</form>
+		
+		<form method = 'POST' hidden>
+		  {% csrf_token %}
+		    <div class="card mb-3">
+				  <h5 for="form-select" class="form-label"><strong>{{crssft_form.name.label_tag}}</strong></h5>
+				  {{crssft_form.name}}
+			</div>
+			<div class="card mb-3">
+				  <h5 for="form-select" class="form-label"><strong>{{crssft_form.crf_cmplx.label_tag}}</strong></h5>
+				  {{crssft_form.crf_cmplx}}
+			</div>
+			<div class="card mb-3">
+				  <h5 for="form-select" class="form-label"><strong>{{crssft_form.cmplx_number.label_tag}}</strong></h5>
+				  {{crssft_form.cmplx_number}}
+			</div>
+			<div class="card mb-3">
+				  <h5 for="form-select" class="form-label"><strong>{{crssft_form.sets.label_tag}}</strong></h5>
+				  {{crssft_form.sets}}
+			</div>
+		  <input class = 'btn btn-primary' type="submit" value="Далее">
+		</form>
+		
+		
+</div>
+<script src="{% static 'js/editor.js' %}"></script>
+ {% endblock %}

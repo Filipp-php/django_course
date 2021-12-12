@@ -1,0 +1,54 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Профиль{% endblock %}
+{% block styles %} <link href="{% static 'css/profile.css' %}" rel="stylesheet"> {% endblock %}
+{% block content %} 
+	
+	<div class="container">
+		<div class ="row">
+			<div class="col-md-4" >
+				{% if greeting.0 == 'Доброй ночи' %}
+				<h3>  {{greeting.0}}, {{user.username}} </h3>	
+				<h3>  {{greeting.1}} </h3>
+				{% else  %}
+				<h3> {{greeting}}, {{user.username}}  </h3>	
+				{% endif %}
+			</div>
+		</div>
+		<br>
+		
+			<div class="card w-75 col-md-3">
+				<div class="card-header" >
+					Мои тренировки
+				</div>
+				 <div class="card-body">
+					<p class="card-text">Посмотреть все свои тренировки</p>
+					<a href="{% url 'catalog' %}" class="btn btn-primary">Перейти в каталог &raquo </a>
+				 </div>
+			</div>
+			<br>
+			<div class="card w-75 col-md-3">
+				<div class="card-header" >
+					Конструктор
+				</div>
+			  <div class="card-body">
+				<h5 class="card-title">Конструктор</h5>
+				<p class="card-text">Создать новую тренировку</p>
+				<a href="{% url 'editor' %}" class="btn btn-primary">Перейти в конструктор &raquo </a>
+			  </div>
+			</div>
+			<br>
+			<div class="card w-75 col-md-3">
+			<div class="card-header">
+					Расписание тренировок
+				</div>
+			  <div class="card-body">
+				<p class="card-text">Посмотерть расписание на неделю</p>
+				<a href="{% url 'schedule' %}" class="btn btn-primary">К расписанию &raquo </a>
+			  </div>
+			</div>
+	</div>	
+
+
+ {% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+	<div class="row justify-content-md-center">
+		<div class="col-md-6">
+			<p class="h3 text-center">
+				Построй свою программу тренировок
+			</p>
+			<p class="h3 text-center">
+				просто и быстро
+			</p>
+		</div>
+	</div>
+	<br>
+	<div class="container">
+	<div class ="row justify-content-md-center">
+				<div class="card w-75">
+					<div class="card-header">
+						Цитата
+					</div>
+					<div class="card-body">
+					<blockquote class="blockquote mb-0">
+						<p>Лучшая и прогрессивная тренировка та, которую ты составил сам..</p>
+						<footer class="blockquote-footer">&copy</footer>
+					</blockquote>
+					</div>
+				</div>
+		</div>
+	</div>
+	<hr size="5">
+	
+	<div class="container">
+		<div class ="row">
+			<h5>Основное</h5>
+			<div class="card w-75 col-md-3">
+			  <div class="card-body">
+				<h5 class="card-title">Конструктор</h5>
+				<p class="card-text">На этом сайте ты можешь создать свою собственную программу тренировок и начать путь к своей цели уже сейчас.</p>
+				<a href="{% url 'editor' %}" class="btn btn-primary">Перейти в конструктор &raquo </a>
+			  </div>
+			</div>
+			<div class="card w-75 col-md-3">
+			  <div class="card-body">
+				<h5 class="card-title">Каталог</h5>
+				<p class="card-text">Также на этом сайте ты можешь найти удобную программу тренировок, а также тренера, который поможет тебе в твоих начинаниях.</p>
+				<a href="{% url 'catalog' %}" class="btn btn-primary">Перейти в каталог &raquo </a>
+			  </div>
+			</div>
+		</div>
+		</br>
+		<div class ="row">
+			<h5>Дополнительно</h5>
+			<br>
+			<div class="card w-75 col-md-3">
+			  <div class="card-body">
+				<h5 class="card-title">Упражнения</h5>
+				<p class="card-text">Здесь ты можешь изучить основные упражнения</p>
+				<a href="{% url 'exercises' %}" class="btn btn-primary">Перейти к списку упражнений &raquo </a>
+			  </div>
+			</div>
+			<div class="card w-75 col-md-3">
+			  <div class="card-body">
+				<h5 class="card-title">Кроссфит комплексы</h5>
+				<p class="card-text">Здесь находиться список нсновных кроссфит комплексов</p>
+				<a href="{% url 'complexes' %}" class="btn btn-primary">Перейти к списку кроссфит комплексов &raquo </a>
+			  </div>
+			</div>
+		</div>
+	</div>		
+{% endblock %}
