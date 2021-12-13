@@ -45,8 +45,93 @@ async function getCopml(){
 
 getCopml()
 
+var workout_name = ''
 
-
+var choose = new Vue({
+  el: '#choose',
+  data() {
+    return {
+	  seen: false,
+	  changedForm: '',
+      name1: '',
+      exercise: '',
+      ex_number: 0,
+      sets: 5,
+	  quantity_in_set: 12,
+	  measurement: 'раз',
+	  rest: 60,
+      name2: '',
+      crf_cmplx: '',
+      cmplx_number: 0,
+      sets: 5,
+    }
+  },
+  methods: {
+    async submitFormEx() {
+		try {
+			let inputW = document.getElementById('id_name')
+			let inputEx = document.getElementById('nameWforCompl')
+			inputEx.value = inputW.value
+			this.ex_number +=1 
+			const currentUser = await getUser()
+			const response = await axios({
+										  method: "post",
+										  url: "/api/base/",
+										  data: {
+											  'name': this.name1,
+											  'exercise': this.exercise,
+											  'ex_number': this.ex_number,
+											  'sets': this.sets,
+											  'quantity_in_set': this.quantity_in_set,
+											  'measurement': this.measurement,
+											  'rest': this.rest
+										  },
+										  headers: {
+											'X-CSRFToken': csrftoken,
+                                            'Content-Type': 'application/json;charset=utf-8'
+										  }
+										})
+			console.log(response)
+			updateList(this.exercise)
+			this.response = JSON.stringify(response, null, 2)
+		} catch (error) {
+			this.response = error.response.data
+			console.log(response)
+		}
+	
+    },
+	async submitFormCompl() {
+		try {
+			let inputW = document.getElementById('id_name')
+			let inputC = document.getElementById('nameWforCompl')
+			inputC.value = inputW.value
+			this.cmplx_number +=1 
+			const currentUser = await getUser()
+			const response = await axios({
+										  method: "post",
+										  url: "/api/base/",
+										  data: {
+											  'name': this.name2,
+											  'crf_cmplx': this.crf_cmplx,
+											  'cmplx_number': this.cmplx_number,
+											  'sets': this.sets
+										  },
+										  headers: {
+											'X-CSRFToken': csrftoken,
+                                            'Content-Type': 'application/json;charset=utf-8'
+										  }
+										})
+			console.log(response)
+			updateList(this.crf_cmplx)
+			this.response = JSON.stringify(response, null, 2)
+		} catch (error) {
+			console.log(error)
+			this.response = error.response.data
+			console.log(response)
+		}
+    }
+  }
+})
 
 new Vue({
   el: '#workout',
@@ -83,10 +168,6 @@ new Vue({
 			console.log(response)
 			this.seen = false
 			choose.seen=true
-			let input1 = document.getElementById('nameWforEx')
-			input1.value = name
-			let input2 = document.getElementById('nameWforCompl')
-			input2.value = name
 			this.response = JSON.stringify(response, null, 2)
 		} catch (error) {
 			console.log(error)
@@ -98,84 +179,7 @@ new Vue({
   }
 })
 
-var choose = new Vue({
-  el: '#choose',
-  data() {
-    return {
-	  seen: false,
-	  changedForm: '',
-      name1: '',
-      exercise: '',
-      ex_number: 0,
-      sets: 5,
-	  quantity_in_set: 12,
-	  measurement: 'раз',
-	  rest: 60,
-      name2: '',
-      crf_cmplx: '',
-      cmplx_number: 0,
-      sets: 5,
-    }
-  },
-  methods: {
-    async submitFormEx() {
-		try {
-			this.ex_number +=1 
-			const currentUser = await getUser()
-			const response = await axios({
-										  method: "post",
-										  url: "/api/base/",
-										  data: {
-											  'name': this.name2,
-											  'exercise': this.exercise,
-											  'ex_number': this.ex_number,
-											  'sets': this.sets,
-											  'quantity_in_set': this.quantity_in_set,
-											  'measurement': this.measurement,
-											  'rest': this.rest
-										  },
-										  headers: {
-											'X-CSRFToken': csrftoken,
-                                            'Content-Type': 'application/json;charset=utf-8'
-										  }
-										})
-			console.log(response)
-			updateList(this.exercise)
-			this.response = JSON.stringify(response, null, 2)
-		} catch (error) {
-			this.response = error.response.data
-			console.log(response)
-		}
-	
-    },
-	async submitFormCompl() {
-		try {
-			this.cmplx_number +=1 
-			const currentUser = await getUser()
-			const response = await axios({
-										  method: "post",
-										  url: "/api/base/",
-										  data: {
-											  'name': this.name3,
-											  'crf_cmplx': this.crf_cmplx,
-											  'cmplx_number': this.cmplx_number,
-											  'sets': this.sets
-										  },
-										  headers: {
-											'X-CSRFToken': csrftoken,
-                                            'Content-Type': 'application/json;charset=utf-8'
-										  }
-										})
-			console.log(response)
-			updateList(this.crf_cmplx)
-			this.response = JSON.stringify(response, null, 2)
-		} catch (error) {
-			this.response = error.response.data
-			console.log(response)
-		}
-    }
-  }
-})
+
 
 
 

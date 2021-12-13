@@ -147,7 +147,7 @@ MEDIA_URL= "/media/"
 STATICFILES_DIRS = [
    os.path.join(PROJECT_ROOT, "static"),
 ]
-
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

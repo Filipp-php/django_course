@@ -21,7 +21,7 @@ async function search(){
 					  <div class="card-body">
 						<h5 class="card-title">${ el.name }</h5>
 						<p class="card-text">${ el.information.substring(0, subEnds) }...</p>
-						<a href="{% url 'editor' %}" class="btn btn-primary">Подробнее &raquo </a>
+						<a href="{% url 'exercise_detail' %}" class="btn btn-primary">Подробнее &raquo </a>
 					  </div>
 					</div>
 				  </div>

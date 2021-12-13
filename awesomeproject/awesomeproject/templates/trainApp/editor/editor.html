@@ -69,7 +69,7 @@
 					</div>
 					<div class="card mb-3" hidden>
 					  <h5 for="form-select" class="form-label"><strong><label for="id_ex_number">Номер упражнения:</label></strong></h5>
-					  <input v-model="ex_number" class="form-control" type="number" name="ex_number" required id="id_ex_number">
+					  <input v-model="ex_number" class="form-control" type="number" name="ex_number" id="id_ex_number">
 					</div>
 					<div class="card mb-3">
 					  <h5 for="form-select" class="form-label"><strong><label for="id_sets">Количество подходов:</label></strong></h5>
@@ -81,8 +81,8 @@
 					</div>	  
 					<div class="card mb-3">
 					  <h5 for="form-select" class="form-label"><strong><label for="id_measurement">Мера для повторений:</label></strong></h5>
-					  <select v-model="measurement" class = "form-select" name="measurement" id="id_measurement">
-						  <option value="Q" selected>раз</option>
+					  <select v-model="measurement" class = "form-select" name="measurement" required id="id_measurement">
+						  <option value="Q" selected >раз</option>
 						  <option value="S">секунды</option>
 					  </select>
 					</div>	  

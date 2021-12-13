@@ -114,7 +114,13 @@ def complex_detail(request, pk):
 def editor(request):
     return render(request, 'trainApp/editor/editor.html')
     
-
+@login_required
+def user_wkts(request): 
+    workout_list = Workout.objects.filter(user=request.user.id)
+    return render(request, 'trainApp/user_wkts.html',
+                    {
+                        'workout_list' : workout_list
+                    })
  
  
 @login_required 
@@ -133,12 +139,14 @@ def schedule(request):
     
     
     week_list = {}
+    workout_list = {}
     help = weekday
     for i in range(weekday, weekday + 7):
         if i == 7:
             help = 0
         key = weekdays[help]
         week_list[key] = today.strftime("%d/%m/%Y")
+        workout_list[key] = Workout.objects.filter(data__year=today.year, data__month=today.month, data__day=today.day).order_by('data')
         today = today + datetime.timedelta(days=1)
         help = help + 1
         
@@ -146,7 +154,8 @@ def schedule(request):
    
     return render(request, 'trainApp/schedule.html',
                     {
-                        'week_list' : week_list
+                        'week_list' : week_list,
+                        'workout_list' : workout_list
                     })
     
 
