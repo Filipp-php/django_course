@@ -1,5 +1,11 @@
 
 
+async function getUser(){
+	let response = await axios.get('/get_curr_user')
+	let data = await response.id 
+	return data
+}
+
 async function getEx(){
 	let response = await fetch('http://127.0.0.1:8000/api/exercise/')
 	let data = await response.json() 
@@ -83,6 +89,7 @@ new Vue({
 			input2.value = name
 			this.response = JSON.stringify(response, null, 2)
 		} catch (error) {
+			console.log(error)
 			this.response = error.response.data['name']
 			this.name = '';
 		}
