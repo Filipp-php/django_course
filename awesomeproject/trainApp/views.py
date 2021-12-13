@@ -8,8 +8,16 @@ from trainApp.forms import WorkoutModelForm, Base_wktModelForm, Crossfit_wktMode
 
 from trainApp.serializers import WorkoutSerializer, Base_wktSerializer, Crossfit_wktSerializer, ExerciseSerializer, Cft_complexSerializer
 from rest_framework import viewsets
+from django.http import HttpResponse,JsonResponse
 # Create your views here.
 
+
+def get_curr_user(request):
+    user = []
+    if request.method == 'POST':
+        user.append({'currentUser':request.user.id})
+        
+    return JsonResponse(request.user.id, safe=False)
 
 class WorkoutViewSet(viewsets.ModelViewSet):
     queryset = Workout.objects.all()
@@ -104,28 +112,7 @@ def complex_detail(request, pk):
 
 @login_required
 def editor(request):
-    if request.method == 'POST' and request.is_ajax():
-        if 'wrkt_form' in request.POST:
-            wrkt_form = WorkoutModelForm(request.POST, prefix='wrkt')
-            if wrkt_form.is_valid():
-                return render(request, 'trainApp/editor/editor.html', {'wrkt_form': wrkt_form})
-        elif 'baseW_form' in request.POST:
-            baseW_form = WorkoutModelForm(request.POST, prefix='baseW')
-            if baseW_form.is_valid():
-                return render(request, 'trainApp/editor/editor.html', {'baseW_form':baseW_form})
-        elif 'crssft_form' in request.POST:
-            crssft_form = WorkoutModelForm(request.POST, prefix='crssft')
-            if crssft_form.is_valid():
-                return render(request, 'trainApp/editor/editor.html', {'crssft_form':crssft_form})
-        return render(request, 'trainApp/editor/editor.html', {'wrkt_form':wrkt_form, 'baseW_form':baseW_form, 'crssft_form':crssft_form})
- 
-    else:
-        wrkt_form = WorkoutModelForm()
-        baseW_form = Base_wktModelForm()
-        crssft_form = Crossfit_wktModelForm()
-    return render(request, 'trainApp/editor/editor.html', {'wrkt_form': wrkt_form, 
-                                                           'baseW_form':baseW_form,
-                                                           'crssft_form':crssft_form})
+    return render(request, 'trainApp/editor/editor.html')
     
 
  

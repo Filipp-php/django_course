@@ -8,98 +8,132 @@
 <div class="container">
 	    <h2>Конструктор</h2>
 		<br>
-		{{wrkt_form.errors}}
-		<form method = 'POST'>
-		  {% csrf_token %}
-		  <div class="card mb-3">
-			  <h5 for="form-select" class="form-label"><strong>{{wrkt_form.name.label_tag}}</strong></h5>
-			  {{wrkt_form.name}}
-		  </div>
-		  
-		  <div class="card mb-3">
-			  <h5 for="form-select" class="form-label"><strong>{{wrkt_form.description.label_tag}}</strong></h5>
-			  {{wrkt_form.description}}
-		  </div>
-		  <div class="card mb-3">
-			  <h5 for="form-select" class="form-label"><strong>{{wrkt_form.data.label_tag}}</strong></h5>
-			  {{wrkt_form.data}}
-		  </div>
-		  {{wrkt_form.user}}
-		  
-			
-			<strong>{{wrkt_form.for_all.label_tag}}</strong>
-			{{wrkt_form.for_all}}
-			
-			<input id="username" type="hidden" value="{{request.user.id}}" />
-		  <br>
-		  <br>
-		  <input class = 'btn btn-primary' type="submit" value="Далее">
-		</form>
-		<br>
-		
-		<div class="card mb-3" hidden>
-			<h5 for="form-select" class="form-label"><strong>Выберите тип упражнений для вашей тренировки</strong></h5>
-			<select class="form-select" aria-label="typeW">
-				<option selected>Не выбрано</option>
-				<option value="1">Стандартные</option>
-				<option value="2">Кроссфит комплексы</option>
-			</select>
+		<div class="row" id='workout' v-show="seen">
+		{%verbatim%}
+			<p> {{ response }} </p>
+		{%endverbatim%}
+			<form @submit.prevent="submitForm">
+				  {% csrf_token %}
+				  <div class="card mb-3">
+					  <h5 for="form-select" class="form-label"><strong><label for="id_name">Название тренировки:</label></strong></h5>
+					  <input v-model="name" class="form-control" type="text" name="name" required id="id_name">
+				  </div>
+				  
+				  <div class="card mb-3">
+					  <h5 for="form-select" class="form-label"><strong><label for="id_description">Описание:</label></strong></h5>
+					  <input v-model="description" class="form-control" type="text" name="description" required id="id_description">
+				  </div>
+				  <div class="card mb-3">
+					  <h5 for="form-select" class="form-label"><strong><label for="id_data">Дата тренировки:</label></strong></h5>
+					  <input v-model="date" class="form-control" type="datetime-local" name="data" required id="id_data">
+				  </div>
+				  
+				<input v-model="checkedForAll" class="form-check-input" type="checkbox" name="for_all" value="1" id="id_for_all" checked>
+				<strong><label for="id_for_all"> Другие пользователи могут видеть эту тренировку</label></strong>
+			  <br>
+			  <br>
+			  <input id='createW'class = 'btn btn-primary' type="submit" value="Далее">
+			</form>
 		</div>
-		<form method = 'POST' hidden>
-		  {% csrf_token %}
-				<div class="card mb-3">
-					<h5 for="form-select" class="form-label"><strong>{{baseW_form.name.label_tag}}</strong></h5>
-					{{baseW_form.name}}
+		</div>
+		<br>
+		<div class="container" id='choose' v-show="seen">
+		<div class="row">
+			<div class="card mb-3">
+				<h5 for="form-select" class="form-label"><strong>Выберите тип упражнений для вашей тренировки</strong></h5>
+				<select v-model="changedForm" class="form-select" aria-label="typeW">
+					<option disabled value="0">Выберите тип упражнения</option>
+					<option selected value="1">Стандартные</option>
+					<option value="2">Кроссфит комплексы</option>
+				</select>
+				
+			</div>
+		</div>
+		<hr size="5">
+		<div class="row g-0">
+			<div class="col-md-4">
+				<h4>Отредактируйте упражнение</h4>
+			
+			<div id='baseW' v-show="changedForm==1">
+			<form @submit.prevent="submitFormEx" >
+			 {% csrf_token %}
+					<div class="card mb-3" hidden>
+						<h5 for="form-select" class="form-label"><strong><label for="id_name">Название тренировки:</label></strong></h5>
+						<input class="form-control" type='text' name="name" required id="nameWforEx" v-model="name1">
+					</div>
+					<div class="card mb-3">
+					  <h5 for="form-select" class="form-label"><strong><label for="id_exercise">Название упражнения:</label></strong></h5>
+					  <select v-model="exercise" class = "form-select" name="exercise" required id="id_exercise">
+						  <option value="" selected disabled>---------</option>
+					  </select>
+					</div>
+					<div class="card mb-3" hidden>
+					  <h5 for="form-select" class="form-label"><strong><label for="id_ex_number">Номер упражнения:</label></strong></h5>
+					  <input v-model="ex_number" class="form-control" type="number" name="ex_number" required id="id_ex_number">
+					</div>
+					<div class="card mb-3">
+					  <h5 for="form-select" class="form-label"><strong><label for="id_sets">Количество подходов:</label></strong></h5>
+					  <input v-model="sets" class="form-control" type="number" name="sets" value="5" required id="id_sets">
+					</div> 
+					<div class="card mb-3">
+					  <h5 for="form-select" class="form-label"><strong><label for="id_quantity_in_set">Количество повторений:</label></strong></h5>
+					  <input v-model="quantity_in_set" class="form-control" type="number" name="quantity_in_set" value="12" required id="id_quantity_in_set">
+					</div>	  
+					<div class="card mb-3">
+					  <h5 for="form-select" class="form-label"><strong><label for="id_measurement">Мера для повторений:</label></strong></h5>
+					  <select v-model="measurement" class = "form-select" name="measurement" id="id_measurement">
+						  <option value="Q" selected>раз</option>
+						  <option value="S">секунды</option>
+					  </select>
+					</div>	  
+					<div class="card mb-3">
+					  <h5 for="form-select" class="form-label"><strong><label for="id_rest">Отдых между подходами (в сек):</label></strong></h5>
+					  <input v-model="rest" class="form-control" type="number" name="rest" value="60" required id="id_rest">
+					</div>		
+				   <input class = 'btn btn-primary' type="submit" value="Добавить упражнение">
+			</form>
+			</div>
+			
+			<div id='crossfit' v-show="changedForm==2">
+			<form @submit.prevent="submitFormCompl" >
+			  {% csrf_token %}
+				<div class="card mb-3" hidden>
+					  <h5 for="form-select" class="form-label"><strong><label for="id_name">Название тренировки:</label></strong></h5>
+					  <input type ="text" name="name" required id="nameWforCompl" v-model="name2">
 				</div>
-			    <div class="card mb-3">
-				  <h5 for="form-select" class="form-label"><strong>{{baseW_form.exercise.label_tag}}</strong></h5>
-				  {{baseW_form.exercise}}
-			    </div>
-			    <div class="card mb-3">
-				  <h5 for="form-select" class="form-label"><strong>{{baseW_form.ex_number.label_tag}}</strong></h5>
-				  {{baseW_form.ex_number}}
-			    </div>
-			    <div class="card mb-3">
-				  <h5 for="form-select" class="form-label"><strong>{{baseW_form.sets.label_tag}}</strong></h5>
-				  {{baseW_form.sets}}
-			    </div> 
-			    <div class="card mb-3">
-				  <h5 for="form-select" class="form-label"><strong>{{baseW_form.quantity_in_set.label_tag}}</strong></h5>
-				  {{baseW_form.quantity_in_set}}
-			    </div>	  
-			    <div class="card mb-3">
-				  <h5 for="form-select" class="form-label"><strong>{{baseW_form.measurement.label_tag}}</strong></h5>
-				  {{baseW_form.measurement}}
-			    </div>	  
-			    <div class="card mb-3">
-				  <h5 for="form-select" class="form-label"><strong>{{baseW_form.rest.label_tag}}</strong></h5>
-				  {{baseW_form.rest}}
-			    </div>		
-			  <input class = 'btn btn-primary' type="submit" value="Далее">
-		</form>
+				<div class="card mb-3">
+					  <h5 for="form-select" class="form-label"><strong><label for="id_crf_cmplx">Название комплекса:</label></strong></h5>
+					  <select v-model="crf_cmplx" name="crf_cmplx" required id="id_crf_cmplx">
+							<option value="" disabled selected>---------</option>
+					  </select>	
+				</div>
+				<div class="card mb-3">
+					  <h5 for="form-select" class="form-label"><strong><label for="id_cmplx_number">Номер комплекса:</label></strong></h5>
+					  <input v-model="cmplx_number" class="form-control" type="number" name="cmplx_number" required id="id_cmplx_number">
+				</div>
+				<div class="card mb-3">
+					  <h5 for="form-select" class="form-label"><strong><label for="id_sets">Количество подходов:</label></strong></h5>
+					  <input v-model="sets" class="form-control" type="number" name="sets" value="3" required id="id_sets">
+				</div>
+			  <input class = 'btn btn-primary' type="submit" value="Добавить комплекс">
+			</form>
+			</div>
+			
+		</div>
+		<div class="col-md-2">
 		
-		<form method = 'POST' hidden>
-		  {% csrf_token %}
-		    <div class="card mb-3">
-				  <h5 for="form-select" class="form-label"><strong>{{crssft_form.name.label_tag}}</strong></h5>
-				  {{crssft_form.name}}
-			</div>
-			<div class="card mb-3">
-				  <h5 for="form-select" class="form-label"><strong>{{crssft_form.crf_cmplx.label_tag}}</strong></h5>
-				  {{crssft_form.crf_cmplx}}
-			</div>
-			<div class="card mb-3">
-				  <h5 for="form-select" class="form-label"><strong>{{crssft_form.cmplx_number.label_tag}}</strong></h5>
-				  {{crssft_form.cmplx_number}}
-			</div>
-			<div class="card mb-3">
-				  <h5 for="form-select" class="form-label"><strong>{{crssft_form.sets.label_tag}}</strong></h5>
-				  {{crssft_form.sets}}
-			</div>
-		  <input class = 'btn btn-primary' type="submit" value="Далее">
-		</form>
-		
+		</div>
+		<div class="col-md-6" id='List_added_ex'>
+		<h4>Список добавленных упражнений</h4>
+		</div>
+		</div>
+		</div>
 		
 </div>
-<script src="{% static 'js/editor.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    var csrftoken = '{{ csrf_token }}';
+</script>
+<script src="{% static 'js/editor.js' %}" defer></script>
  {% endblock %}
