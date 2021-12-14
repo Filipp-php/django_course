@@ -111,9 +111,13 @@ def catalog(request):
                     
 def workout_detail(request, pk):
     workout = Workout.objects.get(pk=pk)
+    exs = Base_wkt.objects.filter(name=workout)
+    cms = Crossfit_wkt.objects.filter(name=workout)
     return render(request, 'trainApp/workout_detail.html',
                     {
-                        'workout' : workout
+                        'workout' : workout,
+                        'exs': exs,
+                        'cms': cms
                     })
                     
 def exercises(request): 
@@ -179,7 +183,7 @@ def schedule(request):
             help = 0
         key = weekdays[help]
         week_list[key] = today.strftime("%d/%m/%Y")
-        workout_list[key] = Workout.objects.filter(data__year=today.year, data__month=today.month, data__day=today.day).order_by('data')
+        workout_list[key] = Workout.objects.filter(user = request.user, data__year=today.year, data__month=today.month, data__day=today.day).order_by('data')
         today = today + datetime.timedelta(days=1)
         help = help + 1
         

@@ -1,7 +1,13 @@
 {% extends 'trainApp/catalog.html' %}
 {%load static%}
+
+
 {% block title %}Ваши тренировки{% endblock %}
 
+{%block search%}
+<h5>Ваши тренировки</h5>
+
+{% endblock %}
 {% block search_script %}
 
 <script src="{% static 'js/user_wkts.js' %}"></script>

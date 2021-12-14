@@ -5,13 +5,15 @@
 {% block content %} 
 
 <div class="container">
+
+		{%block search%}
 		<form method="POST">
 			<div class="input-group mb-3">
 			  <input id ='search' type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
 			  <button id = 'searchButton' class="btn btn-outline-secondary btn-secondary text-white" type="button" id="button-addon1">Поиск &rArr;</button>
 			</div>
 		</form>
-		
+		{% endblock %}
 		<div class ="row" id = 'cardAr'>
 		
 			{% for workout in workout_list %}

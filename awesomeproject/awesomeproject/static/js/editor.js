@@ -224,6 +224,7 @@ var choose = new Vue({
   el: '#choose',
   data() {
     return {
+	  response: '',
 	  id1: 0,
 	  id2:0,
 	  seen: false,
@@ -277,8 +278,7 @@ var choose = new Vue({
 			updateListEx(ex)
 		} catch (error) {
 			console.log(error)
-			this.response = error.response.data
-			console.log(response)
+			this.response = "Провертьте заполненные поля"
 		}
 	
     },
@@ -313,8 +313,7 @@ var choose = new Vue({
 			item.disabled=false
 		} catch (error) {
 			console.log(error)
-			this.response = error.response.data
-			console.log(response)
+			this.response = "Провертьте заполненные поля"
 		}
 		
 	},
@@ -346,9 +345,7 @@ var choose = new Vue({
 			item = document.getElementById('typeEx')
 			item.disabled=false
 		} catch (error) {
-			console.log(error)
-			this.response = error.response.data
-			console.log(response)
+			this.response = "Провертьте заполненные поля"
 		}
 	},
 	async submitFormCompl() {
@@ -377,9 +374,7 @@ var choose = new Vue({
 			}
 			updateListCompl(compl)
 		} catch (error) {
-			console.log(error)
-			this.response = error.response.data
-			console.log(response)
+			this.response = "Провертьте заполненные поля"
 		}
     }
   }
@@ -424,8 +419,11 @@ new Vue({
 			choose.name2 = response.data.id
 		} catch (error) {
 			console.log(error)
-			this.response = error.response.data['name']
-			this.name = '';
+			if (error.response.data['name']) {
+				this.response = error.response.data['name']
+				this.name = '';
+			}
+			this.response = "Провертьте заполненные поля"
 		}
 	
     }

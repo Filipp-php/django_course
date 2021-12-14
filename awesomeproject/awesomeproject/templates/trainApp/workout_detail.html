@@ -4,6 +4,32 @@
 
 {% block content %} 
 
-<p>{{workout.name}}</p>
-<p>{{workout.description}}</p>
+<div class = container>
+	<h4>{{workout.name}}</h4>
+	<h5>Описание: {{workout.description}}</h5>
+	<h5>Запланирована на {{workout.data}}</h5>
+	
+</div>
+
+
+	
+<div class = container>
+	<p>Упражнения:</p>
+	<ul class="list-group">
+	{%for ex in exc%}
+	<li class="list-group-item list-group-item-success">{{ex.exercise.name}}</li>
+	{%endfor%}
+	<ul>
+</div>
+
+
+	
+<div class = container>
+	<p>Комплексы:</p>
+	<ul class="list-group">
+	{%for cm in cms%}
+	<li class="list-group-item list-group-item-success">{{cm.crf_cmplx.name}}</li>
+	{%endfor%}
+	<ul>
+</div>
 {% endblock %} 
