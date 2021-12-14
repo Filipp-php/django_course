@@ -82,7 +82,7 @@
 					<div class="card mb-3">
 					  <h5 for="form-select" class="form-label"><strong><label for="id_measurement">Мера для повторений:</label></strong></h5>
 					  <select v-model="measurement" class = "form-select" name="measurement" required id="id_measurement">
-						  <option value="Q" selected >раз</option>
+						  <option value="Q" selected>раз</option>
 						  <option value="S">секунды</option>
 					  </select>
 					</div>	  
@@ -107,9 +107,9 @@
 							<option value="" disabled selected>---------</option>
 					  </select>	
 				</div>
-				<div class="card mb-3">
+				<div class="card mb-3" hidden>
 					  <h5 for="form-select" class="form-label"><strong><label for="id_cmplx_number">Номер комплекса:</label></strong></h5>
-					  <input v-model="cmplx_number" class="form-control" type="number" name="cmplx_number" required id="id_cmplx_number">
+					  <input v-model="ex_number" class="form-control" type="number" name="cmplx_number" required id="id_cmplx_number">
 				</div>
 				<div class="card mb-3">
 					  <h5 for="form-select" class="form-label"><strong><label for="id_sets">Количество подходов:</label></strong></h5>
@@ -123,8 +123,26 @@
 		<div class="col-md-2">
 		
 		</div>
-		<div class="col-md-6" id='List_added_ex'>
+		<div class="col-md-6">
 		<h4>Список добавленных упражнений</h4>
+		<table class="table table-striped table-hover">
+				
+				  <thead>
+					<tr>
+					  <th scope="col">#</th>  
+					  <th scope="col">Упр.</th>
+					  <th scope="col">Подходов</th>
+					  <th scope="col">Кол повт.</th>
+					  <th scope="col">Отдых.</th>
+					  <th scope="col">Изм.</th>
+					  <th scope="col">Уд.</th>
+					</tr>
+				  </thead>
+				  
+				  <tbody id='List_added_ex'>
+					
+				  </tbody>
+				</table>
 		</div>
 		</div>
 		</div>

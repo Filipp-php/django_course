@@ -18,6 +18,7 @@ def get_curr_user(request):
         user.append({'currentUser':request.user.id})
         
     return JsonResponse(request.user.id, safe=False)
+    
 
 class WorkoutViewSet(viewsets.ModelViewSet):
     queryset = Workout.objects.all()
