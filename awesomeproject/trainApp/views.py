@@ -12,6 +12,38 @@ from django.http import HttpResponse,JsonResponse
 # Create your views here.
 
 
+
+def get_all_ex(request,pk):
+    data = []
+    baseEx = Base_wkt.objects.filter(name=pk).order_by('ex_number')
+    crossCompl = Crossfit_wkt.objects.filter(name=pk).order_by('cmplx_number')
+    for base in baseEx:
+        dataEx = {
+                'id': base.id,
+                'name': base.exercise.name,
+                'ex_number': base.ex_number,
+                'sets': base.sets,
+                'quantity_in_set': base.quantity_in_set,
+                'measurement': base.measurement,
+                'rest': base.rest
+            }
+        data.append(dataEx)
+    for cross in crossCompl:
+        dataEx = {
+                'id': cross.id,
+                'name': cross.crf_cmplx.name,
+                'ex_number': cross.cmplx_number,
+                'sets': cross.sets,
+                'quantity_in_set': '',
+                'measurement': '',
+                'rest': ''
+            }
+        data.append(dataEx)    
+    
+        
+    return JsonResponse(data, safe=False)
+    
+    
 def get_curr_user(request):
     user = []
     if request.method == 'POST':

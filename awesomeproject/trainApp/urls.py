@@ -14,4 +14,5 @@ urlpatterns = [
     path('exercises', views.exercises, name = 'exercises'),
     path('complexes', views.complexes, name = 'complexes'),
     path('user_wkts', views.user_wkts, name = 'user_wkts'),
+    path('get_all_ex/<int:pk>', views.get_all_ex, name = 'get_all_ex'),
 ]

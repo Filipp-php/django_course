@@ -12,7 +12,7 @@
 		{%verbatim%}
 			<p> {{ response }} </p>
 		{%endverbatim%}
-			<form @submit.prevent="submitForm">
+			<form onsubmit="return false;">
 				  {% csrf_token %}
 				  <div class="card mb-3">
 					  <h5 for="form-select" class="form-label"><strong><label for="id_name">Название тренировки:</label></strong></h5>
@@ -32,7 +32,7 @@
 				<strong><label for="id_for_all"> Другие пользователи могут видеть эту тренировку</label></strong>
 			  <br>
 			  <br>
-			  <input  id='createW'class = 'btn btn-primary' type="submit" value="Далее">
+			  <input  @click="submitForm" id='createW'class = 'btn btn-primary' type="submit" value="Далее">
 			</form>
 		</div>
 		</div>
@@ -41,7 +41,7 @@
 		<div class="row">
 			<div class="card mb-3">
 				<h5 for="form-select" class="form-label"><strong>Выберите тип упражнений для вашей тренировки</strong></h5>
-				<select v-model="changedForm" class="form-select" aria-label="typeW">
+				<select id = 'typeEx' v-model="changedForm" class="form-select" aria-label="typeW">
 					<option disabled value="0">Выберите тип упражнения</option>
 					<option selected value="1">Стандартные</option>
 					<option value="2">Кроссфит комплексы</option>
@@ -55,8 +55,9 @@
 				<h4>Отредактируйте упражнение</h4>
 			
 			<div id='baseW' v-show="changedForm==1">
-			<form @submit.prevent="submitFormEx" >
+			<form onsubmit="return false;">
 			 {% csrf_token %}
+			 <input type ="text" name="ex" id="id_ex" v-model="id1" hidden disabled>
 					<div class="card mb-3" hidden>
 						<h5 for="form-select" class="form-label"><strong><label for="id_name">Название тренировки:</label></strong></h5>
 						<input class="form-control" type='text' name="name" required id="nameWforEx" v-model="name1">
@@ -73,7 +74,7 @@
 					</div>
 					<div class="card mb-3">
 					  <h5 for="form-select" class="form-label"><strong><label for="id_sets">Количество подходов:</label></strong></h5>
-					  <input v-model="sets" class="form-control" type="number" name="sets" value="5" required id="id_sets">
+					  <input v-model="sets1" class="form-control" type="number" name="sets" value="5" required id="id_sets">
 					</div> 
 					<div class="card mb-3">
 					  <h5 for="form-select" class="form-label"><strong><label for="id_quantity_in_set">Количество повторений:</label></strong></h5>
@@ -90,13 +91,15 @@
 					  <h5 for="form-select" class="form-label"><strong><label for="id_rest">Отдых между подходами (в сек):</label></strong></h5>
 					  <input v-model="rest" class="form-control" type="number" name="rest" value="60" required id="id_rest">
 					</div>		
-				   <input class = 'btn btn-primary' type="submit" value="Добавить упражнение">
+				   <input v-show="!editBtnEx" @click="submitFormEx" class = 'btn btn-primary' type="submit" value="Добавить упражнение">
+				   <input v-show="editBtnEx" @click="editFormEx" class = 'btn btn-primary' type="submit" value="Добавить упражнение">
 			</form>
 			</div>
 			
 			<div id='crossfit' v-show="changedForm==2">
-			<form @submit.prevent="submitFormCompl" >
+			<form onsubmit="return false;">
 			  {% csrf_token %}
+			  <input type ="text" name="c" id="id_c" v-model="id2" hidden disabled>
 				<div class="card mb-3" hidden>
 					  <h5 for="form-select" class="form-label"><strong><label for="id_name">Название тренировки:</label></strong></h5>
 					  <input type ="text" name="name" required id="nameWforCompl" v-model="name2">
@@ -113,12 +116,14 @@
 				</div>
 				<div class="card mb-3">
 					  <h5 for="form-select" class="form-label"><strong><label for="id_sets">Количество подходов:</label></strong></h5>
-					  <input v-model="sets" class="form-control" type="number" name="sets" value="3" required id="id_sets">
+					  <input v-model="sets2" class="form-control" type="number" name="sets" value="3" required id="id_sets">
 				</div>
-			  <input class = 'btn btn-primary' type="submit" value="Добавить комплекс">
+			  <input v-show="!editBtnC" @click="submitFormCompl" class = 'btn btn-primary' type="submit" value="Добавить комплекс">
+			  <input v-show="editBtnC" @click="editFormCompl" class = 'btn btn-primary' type="submit" value="Добавить комплекс">
 			</form>
 			</div>
-			
+			<br>
+			<a @click="alert('Ваша тренировка сохранена')" class = 'btn btn-primary' href="{% url 'user_wkts' %}">Сохранить</a>
 		</div>
 		<div class="col-md-2">
 		
