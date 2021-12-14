@@ -1,11 +1,5 @@
 
 
-async function getUser(){
-	let response = await axios.get('/get_curr_user')
-	let data = await response.id 
-	return data
-}
-
 async function getEx(){
 	let response = await fetch('http://127.0.0.1:8000/api/exercise/')
 	let data = await response.json() 
@@ -396,7 +390,6 @@ new Vue({
   methods: {
     async submitForm() {
 		try {
-			const currentUser = await getUser()
 			const response = await axios({
 										  method: "post",
 										  url: "/api/workout/",
@@ -404,7 +397,7 @@ new Vue({
 											  'name': this.name, 
 											  'description': this.description,
 											  'data': this.date,
-											  'user': currentUser,
+											  'user': this.user,
 											  'for_all': this.checkedForAll
 										  },
 										  headers: {

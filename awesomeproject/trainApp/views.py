@@ -44,13 +44,6 @@ def get_all_ex(request,pk):
     return JsonResponse(data, safe=False)
     
     
-def get_curr_user(request):
-    user = []
-    if request.method == 'POST':
-        user.append({'currentUser':request.user.id})
-        
-    return JsonResponse(request.user.id, safe=False)
-    
 
 class WorkoutViewSet(viewsets.ModelViewSet):
     queryset = Workout.objects.all()
@@ -183,7 +176,7 @@ def schedule(request):
             help = 0
         key = weekdays[help]
         week_list[key] = today.strftime("%d/%m/%Y")
-        workout_list[key] = Workout.objects.filter(user = request.user, data__year=today.year, data__month=today.month, data__day=today.day).order_by('data')
+        workout_list[key] = Workout.objects.filter(user = request.user.id, data__year=today.year, data__month=today.month, data__day=today.day).order_by('data')
         today = today + datetime.timedelta(days=1)
         help = help + 1
         
