@@ -20,10 +20,10 @@ def signup(request):
             # Create a new user object but avoid saving it yet
             new_user = user_form.save(commit=False)
             # Set the chosen password
-            new_user.set_password(user_form.cleaned_data['password'])
+            new_user.set_password(user_form.cleaned_data['password1'])
             # Save the User object
             new_user.save()
-            return render(request, 'registsration/profile.html', {'new_user': new_user})
+            return render(request, 'registration/profile.html', {'new_user': new_user})
     else:
         user_form = RegisterForm()
     return render(request, 'registration/signup.html', {'user_form': user_form})

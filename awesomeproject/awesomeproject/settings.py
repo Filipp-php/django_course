@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'trainApp.apps.TrainappConfig',
+    'accounts.apps.AccountsConfig',
     'django_extensions',
     'captcha',
     'rest_framework',
