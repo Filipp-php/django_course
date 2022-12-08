@@ -1,22 +1,10 @@
 <template>
-  <video-bg class="vid" :sources="['https://joy.videvo.net/videvo_files/video/free/video0459/large_watermarked/_import_60c593722cd9a6.76835589_preview.mp4']" img="https://joy.videvo.net/videvo_files/video/free/video0458/large_watermarked/_import_60c59183b09766.16800488_preview.mp4">
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav>
   <router-view/>
-  </video-bg>
 </template>
-
-<script>
-import VideoBg from 'vue-videobg'
-export default {
-  components: {
-    VideoBg
-  }
-}
-</script>
-
 
 <style>
 #app {
@@ -25,12 +13,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #993300;
-}
-
-.vid {
-  position: fixed;
-  top: 0; right: 0; bottom: 0; left: 0;
-  overflow: scroll;
+  background-image: url('https://images.unsplash.com/photo-1457195740896-7f345efef228?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 nav {

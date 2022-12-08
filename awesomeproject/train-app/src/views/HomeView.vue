@@ -1,5 +1,6 @@
 <template>
 	<div class="container">
+		<video-bg class="vid" :sources="['https://joy.videvo.net/videvo_files/video/free/video0459/large_watermarked/_import_60c593722cd9a6.76835589_preview.mp4']" img="https://joy.videvo.net/videvo_files/video/free/video0458/large_watermarked/_import_60c59183b09766.16800488_preview.mp4">
 		<div class="row justify-content-md-center">
 			<div class="col-md-6 mt-5">
 				<p class="fs-1 text-center text-uppercase">
@@ -26,7 +27,8 @@
 				</div>
 			</div>
 		</div>
-		<hr size="5" id="home">
+		</video-bg>
+		<hr size="5">
 		<div class="container">
 			<div class ="row justify-content-md-center">
 				<h4>Основное</h4>
@@ -63,10 +65,12 @@
 
 <script>
 import CardUtility from '@/components/utilities/CardUtility.vue'
+import VideoBg from 'vue-videobg'
 export default {
 	name: 'HomeView',
 	components: {
-		CardUtility
+		CardUtility,
+		VideoBg
 	}
 }
 </script>
@@ -74,9 +78,5 @@ export default {
 <style scoped>
 
 .card { background-color: rgba(245, 245, 245, 0.3); }
-
-#home {
-  margin-top: 25%;
-}
 
 </style>
