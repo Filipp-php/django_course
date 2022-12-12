@@ -55,7 +55,7 @@ import InputUtility from '@/components/utilities/InputUtility.vue'
 import { mapActions } from 'vuex'
 import axios from 'axios'
 axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
 export default {
 	name: 'WorkoutView',
 	components: {

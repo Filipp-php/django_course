@@ -166,7 +166,7 @@
 <script>
 import axios from 'axios'
 axios.defaults.xsrfCookieName = 'csrftoken';
-axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
 import { mapState } from 'vuex'
 export default {
 	name: 'ChooseView',
@@ -176,14 +176,12 @@ export default {
 			id1: 0,
 			id2:0,
 			changedForm: '',
-			name1: '',
 			exercise: '',
 			ex_number: 0,
 			sets1: 5,
 			quantity_in_set: 12,
 			measurement: 'раз',
 			rest: 60,
-			name2: '',
 			crf_cmplx: '',
 			sets2: 5,
 			editBtnEx: false,
@@ -198,8 +196,14 @@ export default {
 	},
 	mounted: async function () {
 	// get exercises
-	let response = await fetch('http://127.0.0.1:8000/api/exercise/')
-	let data = await response.json() 
+	let response = await axios({
+  					method: "get",
+  					url: "/api/exercise/",
+  					headers: {
+  						'Content-Type': 'application/json;charset=utf-8'
+  					}
+  				})
+	let data = response.data
 
 	let ar = document.getElementById('id_exercise')
 	for(let el of data){
@@ -210,8 +214,14 @@ export default {
 	}
 
   	// get complexes
-  	response = await fetch('http://127.0.0.1:8000/api/complex/')
-  	data = await response.json() 
+  	response = await axios({
+  					method: "get",
+  					url: "/api/complex/",
+  					headers: {
+  						'Content-Type': 'application/json;charset=utf-8'
+  					}
+  				})
+  	data = response.data
 
   	ar = document.getElementById('id_crf_cmplx')
   	for(let el of data){
@@ -307,8 +317,14 @@ export default {
   			}
   		},
   		async edEx(id){
-  			let response = await fetch('http://127.0.0.1:8000/api/base/'+id)
-  			let ex = await response.json() 
+  			const response = await axios({
+  					method: "get",
+  					url: "/api/base/"+id,
+  					headers: {
+  						'Content-Type': 'application/json;charset=utf-8'
+  					}
+  				})
+  			let ex = response.data
   			console.log(ex)
 
   			this.changedForm=1
@@ -332,8 +348,14 @@ export default {
   			this.rest= ex['rest']
   		},
   		async edC(id){
-  			let response = await fetch('http://127.0.0.1:8000/api/crossf/'+id)
-  			let ex = await response.json() 
+  			const response = await axios({
+  					method: "get",
+  					url: "/api/crossf/"+id,
+  					headers: {
+  						'Content-Type': 'application/json;charset=utf-8'
+  					}
+  				})
+  			let ex = response.data 
   			console.log(ex)
 
   			this.changedForm=2

@@ -19,13 +19,13 @@ const actions = {
 }
 
 const mutations = {
-	saveName1 (state, {newName1}) {
+	saveName1 (state, newName1) {
 		state.name1 = newName1
 	},
-	saveName2 (state, {newName2}) {
+	saveName2 (state, newName2) {
 		state.name2 = newName2
 	},
-	saveCurrentTab (state, {newTab}) {
+	saveCurrentTab (state, newTab) {
 		state.currentTab = newTab
 	}
 }
