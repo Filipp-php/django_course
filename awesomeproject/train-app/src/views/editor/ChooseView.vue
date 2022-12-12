@@ -168,6 +168,7 @@ import axios from 'axios'
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 import { mapState } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
 	name: 'ChooseView',
 	data() {
@@ -232,7 +233,11 @@ export default {
   	}
   },
   methods: {
-  	async delEx(id){
+  	...mapActions('editor', [
+		'changeName1',
+		'changeName2',
+	]),
+  	async delEx(id) {
   		try{
   			await axios({
   				method: "delete",
@@ -247,7 +252,7 @@ export default {
   		this.updateAllList()
   	},
 
-  	async delCompl(id){
+  	async delCompl(id) {
   		try{
   			await axios({
   				method: "delete",
@@ -261,11 +266,18 @@ export default {
   		}
   		this.updateAllList()
   	},
-  	async updateAllList(){
+  	async updateAllList() {
   		try{
-  			let response = await fetch('http://127.0.0.1:8000/get_all_ex/'+this.name1)
-  			let data = await response.json() 
+  			let response = await axios({
+  				method: "get",
+  				url: "/get_all_ex/"+this.name1,
+  				headers: {
+  					'Content-Type': 'application/json;charset=utf-8'
+  				}
+  			})
+  			let data = await response.data
   			let ar = document.getElementById('List_added_ex')
+  			let vm = this
   			ar.innerHTML=''
   			for(let el of data){
   				let newEl = document.createElement('tr')
@@ -285,10 +297,10 @@ export default {
   						`
   						ar.appendChild(newEl)
   						document.getElementById(el.ex_number.toString() + '_del_ex').onclick=async function(){
-  							this.delEx(this.value)
+  							vm.delEx(this.value)
   						}
   						document.getElementById(el.ex_number.toString() + '_ed_ex').onclick=async function(){
-  							this.edEx(this.value)
+  							vm.edEx(this.value)
   						}
 
   					}
@@ -305,10 +317,10 @@ export default {
   						`
   						ar.appendChild(newEl)
   						document.getElementById(el.ex_number.toString() + '_ed_compl').onclick=function(){
-  							this.edC(this.value)
+  							vm.edC(this.value)
   						}
   						document.getElementById(el.ex_number.toString() + '_del_compl').onclick=function(){
-  							this.delCompl(this.value)
+  							vm.delCompl(this.value)
   						}
   					}
   				}
@@ -316,7 +328,7 @@ export default {
   				console.log(error)
   			}
   		},
-  		async edEx(id){
+  		async edEx(id) {
   			const response = await axios({
   					method: "get",
   					url: "/api/base/"+id,
@@ -339,7 +351,7 @@ export default {
   			item.disabled=true
 
   			this.id1 = ex['id']
-  			this.name1 = ex['name']
+  			this.changeName1(ex['name'])
   			this.exercise= ex['exercise']
   			this.ex_number= ex['ex_number']
   			this.sets1= ex['sets']
@@ -347,7 +359,7 @@ export default {
   			this.measurement = ex['measurement']
   			this.rest= ex['rest']
   		},
-  		async edC(id){
+  		async edC(id) {
   			const response = await axios({
   					method: "get",
   					url: "/api/crossf/"+id,
@@ -370,14 +382,15 @@ export default {
   			item.disabled=true
 
   			this.id2 = ex['id']
-  			this.name2= ex['name']
+  			this.changeName2(ex['name'])
   			this.crf_cmplx= ex['crf_cmplx']
   			this.ex_number= ex['cmplx_number']
   			this.sets2= ex['sets']
   		},
-  		updateListEx(ex){
+  		updateListEx(ex) {
   			let ar = document.getElementById('List_added_ex')
   			let newEl = document.createElement('tr')
+  			let vm = this
   			newEl.id = ex['ex_number']+'_ex'
   			newEl.innerHTML=`	
   			<th scope="row">${ex['ex_number']}</th>
@@ -390,16 +403,17 @@ export default {
   			`
   			ar.appendChild(newEl)
   			document.getElementById(ex['ex_number'].toString() + '_del_ex').onclick=function(){
-  				this.delEx(this.value)
+  				vm.delEx(this.value)
   			}
   			document.getElementById(ex['ex_number'].toString() + '_ed_ex').onclick=async function(){
-  				this.edEx(this.value)
+  				vm.edEx(this.value)
   			}
 
   		},
-  		updateListCompl(compl){
+  		updateListCompl(compl) {
   			let ar = document.getElementById('List_added_ex')
   			let newEl = document.createElement('tr')
+  			let vm = this
   			newEl.id = compl['cmplx_number']+'_compl'
   			newEl.innerHTML=`	
   			<th scope="row">${compl['cmplx_number']}</th>
@@ -412,10 +426,10 @@ export default {
   			`
   			ar.appendChild(newEl)
   			document.getElementById(compl['cmplx_number'].toString() + '_ed_compl').onclick=function(){
-  				this.edC(this.value)
+  				vm.edC(this.value)
   			}
   			document.getElementById(compl['cmplx_number'].toString() + '_del_compl').onclick=function(){
-  				this.delCompl(this.value)
+  				vm.delCompl(this.value)
   			}
   		},
   		async submitFormEx() {

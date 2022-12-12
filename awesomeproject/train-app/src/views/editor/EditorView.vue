@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" id="editor">
         <h2>Конструктор</h2>
         <component :is="currentTab"></component>
     </div>
@@ -22,3 +22,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+#editor {
+    padding-top: 5%;
+    padding-bottom: 40%;
+}
+
+</style>
