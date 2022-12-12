@@ -1,5 +1,8 @@
 <template>
 	<div class="container">
+		<login-view-vue
+			@login="checkLoginAndPassword"
+			v-model:is-success="isSuccessVisible"/>
 		<video-bg class="vid" :sources="['https://joy.videvo.net/videvo_files/video/free/video0459/large_watermarked/_import_60c593722cd9a6.76835589_preview.mp4']" img="https://joy.videvo.net/videvo_files/video/free/video0458/large_watermarked/_import_60c59183b09766.16800488_preview.mp4">
 		<div class="row justify-content-md-center">
 			<div class="col-md-6 mt-5">
@@ -66,12 +69,42 @@
 <script>
 import CardUtility from '@/components/utilities/CardUtility.vue'
 import VideoBg from 'vue-videobg'
+import LoginViewVue from '@/views/registration/LoginView.vue';
+import axios from 'axios';
 export default {
 	name: 'HomeView',
 	components: {
 		CardUtility,
-		VideoBg
+		VideoBg,
+		LoginViewVue
+	},
+	data(){
+	return {
+	isSuccessVisible: true
 	}
+},
+methods: {
+	async checkLoginAndPassword(user){
+		try{
+			const response = await axios({
+										method: "get",
+										url: "/api/base/",
+										data: {
+											'login': user.login,
+											'password': user.password									
+										},
+										headers: {
+											// 'X-CSRFToken': csrftoken,
+											'Content-Type': 'application/json;charset=utf-8'
+										}
+										});
+			console.log(response)	
+		}
+		catch(e){
+			alert('Ошибка' + e)
+		}
+	}
+}
 }
 </script>
 

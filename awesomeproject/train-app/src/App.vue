@@ -4,7 +4,29 @@
     <router-link to="/about">About</router-link>
   </nav>
   <router-view/>
+  <div>
+    <login-view-vue
+    @login="loginUser"
+    v-model:is-success="isSuccessVisible"/>
+  </div>
 </template>
+<script>
+import LoginViewVue from './views/registration/LoginView.vue';
+export default{
+  components: {
+    LoginViewVue
+  },
+  data(){
+    return {
+      isSuccessVisible: false
+    }
+  },
+  methods: {
+    checkLoginAndPassword(){
+    }
+  }
+}
+</script>
 
 <style>
 #app {
