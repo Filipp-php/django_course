@@ -3,7 +3,7 @@
 		<div class="card-body">
 			<h5 class="card-title">{{ title }}</h5>
 			<p class="card-text">{{ desc }}</p>
-			<a href="{{ url }}" class="btn btn-primary">{{ text_url }}</a>
+			<router-link :to="url"><a class="btn btn-primary">{{ text_url }}</a></router-link>
 		</div>
 	</div>
 </template>

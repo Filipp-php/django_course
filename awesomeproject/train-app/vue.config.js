@@ -26,6 +26,11 @@ module.exports = {
         "ws": true,
         "changeOrigin": true
       },
+      "^/get_all_ex": {
+        "target": "http://127.0.0.1:8000",
+        "ws": true,
+        "changeOrigin": true
+      },
       "^/admin": {
         "target": "http://127.0.0.1:8000",
         "ws": true,
