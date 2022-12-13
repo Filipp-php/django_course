@@ -71,7 +71,7 @@ class Base_wkt(models.Model):
     measurement = models.CharField(max_length=1, choices=measurements, verbose_name="Мера для повторений", default=measurements[0])
     rest = models.IntegerField(verbose_name="Отдых между подходами (в сек)", default = 60)
     def __str__(self):
-        return self.name
+        return str(self.name)
     
     class Meta:
         verbose_name = "Базовая тренировка"

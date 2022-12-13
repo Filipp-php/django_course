@@ -29,6 +29,7 @@ router.register(r'complex', Cft_complexViewSet, basename="Cft_complex")
 
 urlpatterns = [
     path('', include('trainApp.urls')),
+    path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
     path('accounts/', include('accounts.urls')),
     path('captcha/', include('captcha.urls')),
