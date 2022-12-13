@@ -19,6 +19,39 @@ const routes = [
     path: '/editor',
     name: 'editor',
     component: () => import(/* webpackChunkName: "editor" */ '../views/editor/EditorView.vue')
+  },
+  {
+    path: '/catalog',
+    name: 'catalog',
+    component: () => import(/* webpackChunkName: "catalog" */ '../views/catalog/CatalogView.vue')
+  },
+  {
+    path: '/workout/:pk',
+    name: 'workout',
+    component: () => import(/* webpackChunkName: "workout" */ '../views/catalog/WorkoutDetailView.vue'),
+    props: true
+  },
+  {
+    path: '/exercises',
+    name: 'exercises',
+    component: () => import(/* webpackChunkName: "exercises" */ '../views/exercises/ExercisesView.vue')
+  },
+  {
+    path: '/exercise/:pk',
+    name: 'exercise',
+    component: () => import(/* webpackChunkName: "exercise" */ '../views/exercises/ExerciseDetailView.vue'),
+    props: true
+  },
+  {
+    path: '/complexes',
+    name: 'complexes',
+    component: () => import(/* webpackChunkName: "exercicomplexesses" */ '../views/complexes/ComplexesView.vue')
+  },
+  {
+    path: '/complex/:pk',
+    name: 'complex',
+    component: () => import(/* webpackChunkName: "complex" */ '../views/complexes/ComplexDetailView.vue'),
+    props: true
   }
 ]
 
