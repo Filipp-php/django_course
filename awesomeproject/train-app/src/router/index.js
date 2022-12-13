@@ -41,6 +41,17 @@ const routes = [
     name: 'exercise',
     component: () => import(/* webpackChunkName: "exercise" */ '../views/exercises/ExerciseDetailView.vue'),
     props: true
+  },
+  {
+    path: '/complexes',
+    name: 'complexes',
+    component: () => import(/* webpackChunkName: "exercicomplexesses" */ '../views/complexes/ComplexesView.vue')
+  },
+  {
+    path: '/complex/:pk',
+    name: 'complex',
+    component: () => import(/* webpackChunkName: "complex" */ '../views/complexes/ComplexDetailView.vue'),
+    props: true
   }
 ]
 
