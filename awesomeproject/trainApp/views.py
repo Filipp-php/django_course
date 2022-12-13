@@ -61,9 +61,23 @@ class Base_wktViewSet(viewsets.ModelViewSet):
     queryset = Base_wkt.objects.all()
     serializer_class = Base_wktSerializer
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        name = self.request.query_params.get('name')
+        if name is not None:
+            queryset = queryset.filter(name__id__contains=name)
+        return queryset
+
 class Crossfit_wktViewSet(viewsets.ModelViewSet):
     queryset = Crossfit_wkt.objects.all()
     serializer_class = Crossfit_wktSerializer
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        name = self.request.query_params.get('name')
+        if name is not None:
+            queryset = queryset.filter(name__id=name)
+        return queryset
 
 class ExerciseViewSet(viewsets.ModelViewSet):
     queryset = Exercise.objects.all()

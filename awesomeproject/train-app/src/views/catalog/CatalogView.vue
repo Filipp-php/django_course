@@ -12,7 +12,7 @@
 			  <div class="card-body">
 				<h5 class="card-title"> {{ workout.name }} </h5>
 				<p class="card-text">{{ workout.description }} </p>
-				<a href="{{ workout.get_absolute_url }}" class="btn btn-primary">Подробнее &raquo; </a>
+				<router-link :to="workout.url"><a class="btn btn-primary">Подробнее &raquo; </a></router-link>
 			  </div>
 			</div>
 
@@ -47,6 +47,9 @@ export default {
 				}
   			})
 			this.workouts = response.data
+			for (let i = 0; i < this.workouts.length; i++){
+				this.workouts[i].url = "/workout/" + this.workouts[i].id
+			}
 		}
     }
 }
