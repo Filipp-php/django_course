@@ -24,12 +24,22 @@ const routes = [
     path: '/catalog',
     name: 'catalog',
     component: () => import(/* webpackChunkName: "catalog" */ '../views/catalog/CatalogView.vue')
-  }
-  ,
+  },
   {
     path: '/workout/:pk',
     name: 'workout',
     component: () => import(/* webpackChunkName: "workout" */ '../views/catalog/WorkoutDetailView.vue'),
+    props: true
+  },
+  {
+    path: '/exercises',
+    name: 'exercises',
+    component: () => import(/* webpackChunkName: "exercises" */ '../views/exercises/ExercisesView.vue')
+  },
+  {
+    path: '/exercise/:pk',
+    name: 'exercise',
+    component: () => import(/* webpackChunkName: "exercise" */ '../views/exercises/ExerciseDetailView.vue'),
     props: true
   }
 ]
