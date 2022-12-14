@@ -6,28 +6,26 @@
     <router-link to="/exercises">Упражнения</router-link> |
     <router-link to="/complexes">Комплексы</router-link> |
     <router-link to="/about">О нас</router-link>
+    <my-button class="butt"
+            @click="exit"
+        >
+        Выйти
+        </my-button>
   </nav>
   <router-view/>
-  <div>
-    <login-view-vue
-    @login="loginUser"
-    v-model:is-success="isSuccessVisible"/>
-  </div>
 </template>
 <script>
-import LoginViewVue from './views/registration/LoginView.vue';
+import { mapState } from 'vuex'
 export default{
-  components: {
-    LoginViewVue
-  },
-  data(){
-    return {
-      isSuccessVisible: false
-    }
-  },
   methods: {
-    checkLoginAndPassword(){
-    }
+        exit(){
+            this.isLoggedIn = false
+        },
+    computed: {
+        ...mapState({
+            isLoggedIn: state => state.editor.isLoggedIn
+        })
+    },
   }
 }
 </script>
@@ -51,6 +49,10 @@ nav {
 nav a {
   font-weight: bold;
   color: #2c3e50;
+}
+
+.butt{
+    margin-left: 40px;
 }
 
 nav a.router-link-exact-active {

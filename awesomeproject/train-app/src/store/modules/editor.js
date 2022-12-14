@@ -3,7 +3,6 @@ const state = {
 	name1: '',
 	name2: '',
 	currentTab: 'workout-view'
-
 }
 
 const actions = {

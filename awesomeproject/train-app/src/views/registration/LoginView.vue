@@ -10,7 +10,7 @@
         <div>
         <my-input class="input"
             v-model:value="user.password"
-            type="text"
+            type="password"
             placeholder="Пароль"
         />
     </div>
@@ -19,6 +19,11 @@
             @click="loginUser"
         >
         Войти
+        </my-button>
+        <my-button class="butt"
+            @click="registration"
+        >
+        Зарегистрироваться
         </my-button>
         <h2 v-if="isSuccess === false">
            Неправильный логин или пароль 
@@ -31,7 +36,7 @@ export default {
     props:{
         isSuccess: {
             type: Boolean,
-            dafault: true
+            default: true
         }
     },
     data(){
@@ -45,6 +50,9 @@ export default {
     methods: {
         loginUser(){
             this.$emit('login', this.user)
+        },
+        registration(){
+            this.$emit('registration')
         }
     }
 }
@@ -53,6 +61,7 @@ export default {
 <style scoped>
 .butt{
     margin-top: 15px;
+    margin: 10px;
 }
 
 .input{

@@ -1,8 +1,11 @@
 <template>
 	<div class="container">
-		<login-view-vue
+		<!-- <login-view-vue
 			@login="checkLoginAndPassword"
 			v-model:is-success="isSuccessVisible"/>
+		<registration-view-vue 
+			@register="registerUser"
+			v-model:is-success="isSuccessRegistration"/> -->
 		<video-bg class="vid" :sources="['https://joy.videvo.net/videvo_files/video/free/video0459/large_watermarked/_import_60c593722cd9a6.76835589_preview.mp4']" img="https://joy.videvo.net/videvo_files/video/free/video0458/large_watermarked/_import_60c59183b09766.16800488_preview.mp4">
 		<div class="row justify-content-md-center">
 			<div class="col-md-6 mt-5">
@@ -57,7 +60,7 @@
 		url="">
 	</card-utility>
 	<card-utility title="Кроссфит комплексы"
-	desc="Здесь находиться список нсновных кроссфит комплексов"
+	desc="Здесь находится список основных кроссфит комплексов"
 	text_url="Перейти к списку кроссфит комплексов &raquo; "
 	url="">
 </card-utility>
@@ -70,6 +73,7 @@
 import CardUtility from '@/components/utilities/CardUtility.vue'
 import VideoBg from 'vue-videobg'
 import LoginViewVue from '@/views/registration/LoginView.vue';
+import RegistrationViewVue from '@/views/registration/RegistrationView.vue';
 import axios from 'axios';
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -78,11 +82,13 @@ export default {
 	components: {
 		CardUtility,
 		VideoBg,
-		LoginViewVue
+		// LoginViewVue,
+		// RegistrationViewVue
 	},
 	data(){
 	return {
-	isSuccessVisible: false
+	isSuccessVisible: false,
+	isSuccessRegistration: false
 	}
 },
 methods: {
@@ -102,6 +108,30 @@ methods: {
 										});
 			console.log(response.data)	
 			this.isSuccessVisible = response.data[0];
+		}
+		catch(e){
+			alert('Ошибка' + e)
+		}
+	},
+	async registerUser(user){
+		try{
+			const response = await axios({
+										method: "post",
+										url: "/accounts/registrationuser",
+										data: {
+											'username': user.username,
+											'password1': user.password1,
+											'password2': user.password2,
+											'fullname': user.fullname,
+											'email': user.email												
+										},
+										headers: {
+											//'X-CSRFToken': csrftoken,
+											'Content-Type': 'application/json;charset=utf-8'
+										}
+										});
+			console.log(response)	
+			this.isSuccessRegistration = response.data[0];
 		}
 		catch(e){
 			alert('Ошибка' + e)
