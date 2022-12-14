@@ -1,17 +1,32 @@
+import re
+
 from django.shortcuts import render
 from django.views.generic import CreateView, TemplateView
 from accounts.forms import RegisterForm
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.http import HttpResponse,JsonResponse
 import datetime
+import json
 # Create your views here.
 
     
 class Login(LoginView):
     template_name = "registration/login.html"
     
-    
+def login_user(request):
+    all_users = User.objects.all()
+    login = json.loads(request.body)['username']
+    password = json.loads(request.body)['password']
+    current_users = User.objects.filter(username=login)
+    if(len(current_users)==0):
+        return JsonResponse([False], safe=False)
+    result = current_users[0].check_password(password)
+    print(login, password, result)
+    return JsonResponse([True], safe=False)
+
    
 def signup(request):
     if request.method == 'POST':

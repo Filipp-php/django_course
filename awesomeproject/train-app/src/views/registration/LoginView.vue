@@ -1,17 +1,21 @@
 <template>
     <form @submit.prevent>
         <h4>Вход</h4>
-        <my-input
+        <div>
+        <my-input class="input"
             v-model:value="user.login"
             type="text"
             placeholder="Логин"
-        />
-        <my-input
+        /></div>
+        <div>
+        <my-input class="input"
             v-model:value="user.password"
             type="text"
             placeholder="Пароль"
         />
-        <my-button
+    </div>
+    
+        <my-button class="butt"
             @click="loginUser"
         >
         Войти
@@ -40,8 +44,6 @@ export default {
     },
     methods: {
         loginUser(){
-            this.user.login = '';
-            this.user.password ='';
             this.$emit('login', this.user)
         }
     }
@@ -49,5 +51,11 @@ export default {
 </script>
 
 <style scoped>
+.butt{
+    margin-top: 15px;
+}
 
+.input{
+    max-width: 50%;
+}
 </style>

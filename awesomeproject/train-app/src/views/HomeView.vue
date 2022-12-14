@@ -71,6 +71,8 @@ import CardUtility from '@/components/utilities/CardUtility.vue'
 import VideoBg from 'vue-videobg'
 import LoginViewVue from '@/views/registration/LoginView.vue';
 import axios from 'axios';
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
 export default {
 	name: 'HomeView',
 	components: {
@@ -80,25 +82,26 @@ export default {
 	},
 	data(){
 	return {
-	isSuccessVisible: true
+	isSuccessVisible: false
 	}
 },
 methods: {
 	async checkLoginAndPassword(user){
 		try{
 			const response = await axios({
-										method: "get",
-										url: "/api/base/",
+										method: "post",
+										url: "/accounts/loginuser",
 										data: {
-											'login': user.login,
+											'username': user.login,
 											'password': user.password									
 										},
 										headers: {
-											// 'X-CSRFToken': csrftoken,
+											//'X-CSRFToken': csrftoken,
 											'Content-Type': 'application/json;charset=utf-8'
 										}
 										});
-			console.log(response)	
+			console.log(response.data)	
+			this.isSuccessVisible = response.data[0];
 		}
 		catch(e){
 			alert('Ошибка' + e)
