@@ -52,6 +52,18 @@ const routes = [
     name: 'complex',
     component: () => import(/* webpackChunkName: "complex" */ '../views/complexes/ComplexDetailView.vue'),
     props: true
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "login" */ '../views/registration/LoginView.vue'),
+    props: true
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: () => import(/* webpackChunkName: "register" */ '../views/registration/RegistrationView.vue'),
+    props: true
   }
 ]
 

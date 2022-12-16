@@ -1,9 +1,9 @@
 const state = {
-	isLoggedIn: ''
+	isLoggedIn: false
 }
 
 const actions = {
-	changeName1 ({ state, commit }, value) {
+	changeLoggedIn ({ state, commit }, value) {
 		commit('saveValue', value)
 	}
 }

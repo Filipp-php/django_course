@@ -2,60 +2,86 @@
     <form @submit.prevent>
         <h4>Вход</h4>
         <div>
-        <my-input class="input"
-            v-model:value="user.login"
-            type="text"
-            placeholder="Логин"
-        /></div>
+            <my-input class="input"
+                v-model:value="user.login"
+                type="text"
+                placeholder="Логин"
+            />
+        </div>
         <div>
-        <my-input class="input"
-            v-model:value="user.password"
-            type="password"
-            placeholder="Пароль"
-        />
-    </div>
+            <my-input class="input"
+                v-model:value="user.password"
+                type="password"
+                placeholder="Пароль"
+            />
+        </div>
     
         <my-button class="butt"
-            @click="loginUser"
-        >
+            @click="login">
         Войти
         </my-button>
-        <my-button class="butt"
-            @click="registration"
-        >
-        Зарегистрироваться
-        </my-button>
-        <h2 v-if="isSuccess === false">
+        <nav>
+            <router-link to="/register">Зарегистрироваться</router-link> 
+        </nav>
+        <h2 v-if="!isSuccess">
            Неправильный логин или пароль 
         </h2>
     </form>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import axios from 'axios';
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
 export default {
-    props:{
-        isSuccess: {
-            type: Boolean,
-            default: true
-        }
-    },
     data(){
         return {
+            isSuccess: true,
             user: {
                 login:'',
                 password:''
             }
         }
     },
+    mounted () {
+        this.changePosition('fixed')
+    },
+    unmounted () {
+      this.changePosition('relative')
+    },
     methods: {
-        loginUser(){
-            this.$emit('login', this.user)
-        },
-        registration(){
-            this.$emit('registration')
+        ...mapActions('login', [
+            'changeLoggedIn'
+        ]),
+        ...mapActions([
+            'changePosition'
+        ]),
+        async login () {
+            try{
+                const response = await axios({
+                    method: "post",
+                    url: "/accounts/loginuser",
+                    data: {
+                        'username': this.user.login,
+                        'password': this.user.password                                   
+                    },
+                    headers: {
+                        //'X-CSRFToken': csrftoken,
+                        'Content-Type': 'application/json;charset=utf-8'
+                    }
+                });
+                console.log(response.data)  
+                this.isSuccess = response.data[0];
+                this.changeLoggedIn(response.data[0]);
+            }
+            catch(e){
+                alert('Ошибка' + e)
+            }
         }
     }
 }
+
 </script>
 
 <style scoped>

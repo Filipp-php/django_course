@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
 import datetime
 import json
-
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
@@ -18,16 +18,30 @@ import json
 class Login(LoginView):
     template_name = "registration/login.html"
 
+def check_logged_in(request):
+    if request.user.is_authenticated:
+        return JsonResponse([True], safe=False)
+    return JsonResponse([False], safe=False)
+
+def log_out(request):
+    if request.user.is_authenticated:
+        logout(request)
+        return JsonResponse([True], safe=False)
+    return JsonResponse([False], safe=False)
 
 def login_user(request):
-    login = json.loads(request.body)['username']
+    username = json.loads(request.body)['username']
     password = json.loads(request.body)['password']
-    current_users = User.objects.filter(username=login)
-    if len(current_users) == 0:
-        return JsonResponse([False], safe=False)
-    result = current_users[0].check_password(password)
-    print(login, password, result)
-    return JsonResponse([True], safe=False)
+    #current_users = User.objects.filter(username=username)
+    #if len(current_users) == 0:
+    #    return JsonResponse([False], safe=False)
+    #result = current_users[0].check_password(password)
+    #print(login, password, result)
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        login(request, user)
+        return JsonResponse([True], safe=False)
+    return JsonResponse([False], safe=False)
 
 
 def registration(request):

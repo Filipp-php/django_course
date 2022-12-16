@@ -57,12 +57,12 @@
 		<card-utility title="Упражнения"
 		desc="Здесь ты можешь изучить основные упражнения"
 		text_url="Перейти к списку упражнений &raquo; "
-		url="">
+		url="/exercises">
 	</card-utility>
 	<card-utility title="Кроссфит комплексы"
 	desc="Здесь находится список основных кроссфит комплексов"
 	text_url="Перейти к списку кроссфит комплексов &raquo; "
-	url="">
+	url="/complexes">
 </card-utility>
 </div>
 </div>	

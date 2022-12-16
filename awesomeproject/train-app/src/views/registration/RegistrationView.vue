@@ -28,16 +28,13 @@
             placeholder="Повторите пароль"
         />    
         <my-button class="butt"
-            @click="registerUser"
-        >
-        Зарегистрироваться
+            @click="registerUser">
+            Зарегистрироваться
         </my-button>
-        <my-button class="butt"
-            @click="needLogIn"
-        >
-        Войти
-        </my-button>
-        <h2 v-if="isSuccess === false">
+        <nav>
+            <router-link to="/login">Войти</router-link> 
+        </nav>
+        <h2 v-if="!isSuccess">
            Неправильные данные, поторите ввод 
         </h2>
     </div>
@@ -45,15 +42,14 @@
 </template>
 
 <script>
+import axios from 'axios';
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
+import { mapActions } from 'vuex'
 export default {
-    props:{
-        isSuccess: {
-            type: Boolean,
-            default: true
-        }
-    },
     data(){
         return {
+            isSuccess: true,
             newuser: {
                 username:'',
                 password1:'',
@@ -63,12 +59,39 @@ export default {
             }
         }
     },
+    mounted () {
+        this.changePosition('fixed')
+    },
+    unmounted () {
+      this.changePosition('relative')
+    },
     methods: {
-        registerUser(){
-            this.$emit('register', this.newuser)
-        },
-        needLogIn(){
-            this.$emit('needlogin')
+        ...mapActions([
+            'changePosition'
+        ]),
+        async registerUser(user){
+            try{
+                const response = await axios({
+                        method: "post",
+                        url: "/accounts/registrationuser",
+                        data: {
+                            'username': this.newuser.username,
+                            'password1': this.newuser.password1,
+                            'password2': this.newuser.password2,
+                            'fullname': this.newuser.fullname,
+                            'email': this.newuser.email                                             
+                        },
+                        headers: {
+                            //'X-CSRFToken': csrftoken,
+                            'Content-Type': 'application/json;charset=utf-8'
+                        }
+                });
+                console.log(response)   
+                this.isSuccess = response.data[0];
+            }
+            catch(e){
+                alert('Ошибка' + e)
+            }
         }
     }
 }

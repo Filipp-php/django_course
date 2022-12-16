@@ -17,15 +17,11 @@ class Cft_complexSerializer(serializers.ModelSerializer):
         fields ="__all__"
         
 class Base_wktSerializer(serializers.ModelSerializer):
-    name = WorkoutSerializer()
-    exercise = ExerciseSerializer()
     class Meta:
         model = Base_wkt
         fields ="__all__"
       
 class Crossfit_wktSerializer(serializers.ModelSerializer):
-    name = WorkoutSerializer()
-    crf_cmplx = Cft_complexSerializer()
     class Meta:
         model = Crossfit_wkt
         fields ="__all__"
