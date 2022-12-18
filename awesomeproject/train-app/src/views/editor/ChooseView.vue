@@ -232,11 +232,24 @@
 			ar.appendChild(newEl)
 		}
 	},
+	watch: {
+		changedForm () {
+			if (this.changedForm == 1) {
+				this.changePosition('relative')
+			}
+			else {
+				this.changePosition('fixed')
+			}
+		}
+	},
 	methods: {
 		...mapActions('editor', [
 			'changeName1',
 			'changeName2',
 		]),
+		...mapActions([
+            'changePosition'
+        ]),
 		async delEx(id) {
 			try{
 				await axios({

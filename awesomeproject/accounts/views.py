@@ -6,7 +6,7 @@ from accounts.forms import RegisterForm
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.http import HttpResponse, JsonResponse
 import datetime
 import json
@@ -54,7 +54,9 @@ def registration(request):
         fullname = json_request_body['fullname']
         if request.method == 'POST':
             if (password1 == password2):
-                User.objects.create_user(username, email, password1)
+                group = Group.objects.get(name='trainUser')
+                user = User.objects.create_user(username, email, password1)
+                user.groups.add(group)
                 return JsonResponse([True], safe=False)
         return JsonResponse([False], safe=False)
     except:

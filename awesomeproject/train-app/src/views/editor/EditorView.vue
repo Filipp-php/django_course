@@ -17,6 +17,9 @@ export default {
         WorkoutView
     },
     mounted () {
+        if (!this.isLoggedIn) {
+            this.$router.push({ name: 'login', query: { redirect: '/editor' } });
+        }
         this.changePosition('fixed')
     },
     unmounted () {
@@ -29,6 +32,7 @@ export default {
     },
     computed: {
         ...mapState({
+            isLoggedIn: state => state.login.isLoggedIn,
             currentTab: state => state.editor.currentTab,
             currentStyle: state => state.currentStyle
         })

@@ -32,7 +32,10 @@
             Зарегистрироваться
         </my-button>
         <nav>
-            <router-link to="/login">Войти</router-link> 
+            <my-button class="butt"
+                @click="clickLogin">
+                Войти
+            </my-button>
         </nav>
         <h2 v-if="!isSuccess">
            Неправильные данные, поторите ввод 
@@ -45,6 +48,7 @@
 import axios from 'axios';
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
+import { mapState } from 'vuex'
 import { mapActions } from 'vuex'
 export default {
     data(){
@@ -59,7 +63,15 @@ export default {
             }
         }
     },
+    computed: {
+        ...mapState({
+            isLoggedIn: state => state.login.isLoggedIn
+        })
+    },
     mounted () {
+        if (this.isLoggedIn) {
+            this.$router.push({ name: 'home' });
+        }
         this.changePosition('fixed')
     },
     unmounted () {
@@ -69,6 +81,10 @@ export default {
         ...mapActions([
             'changePosition'
         ]),
+        clickLogin () {
+            this.$router.push({ name: 'login', 
+                query: { redirect: this.$route.query.redirect || '' } });
+        },
         async registerUser(user){
             try{
                 const response = await axios({
@@ -88,6 +104,10 @@ export default {
                 });
                 console.log(response)   
                 this.isSuccess = response.data[0];
+                if (this.isSuccess) {
+                    alert('Вы успешно зарегистрированы, можете войти в аккаут')
+                    this.clickLogin()
+                }
             }
             catch(e){
                 alert('Ошибка' + e)

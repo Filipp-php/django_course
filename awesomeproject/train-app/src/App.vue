@@ -1,13 +1,17 @@
 <template>
   <nav>
     <router-link to="/">Главная</router-link> |
-    <router-link to="/editor">Конструктор</router-link> |
+    <a @click="clickLink('/editor')">
+      <router-link to="/editor">Конструктор</router-link>
+    </a> |
     <router-link to="/catalog">Каталог</router-link> | 
     <router-link to="/exercises">Упражнения</router-link> |
     <router-link to="/complexes">Комплексы</router-link> |
-    <router-link to="/about">О нас</router-link> |
-    <router-link to="/login">Войти</router-link> |
-    <router-link to="/register">Зарегистрироваться</router-link>
+    <router-link to="/about">О нас</router-link>
+    <div v-if="!isLoggedIn">
+      <router-link to="/login">Войти</router-link> |
+      <router-link to="/register">Зарегистрироваться</router-link>
+    </div>
     <my-button class="butt" v-if="isLoggedIn"
             @click="exit"
         >
@@ -47,7 +51,15 @@ export default{
           }
         })
       this.changeLoggedIn(!response.data[0]);
+      if (!this.isLoggedIn) {
+        this.$router.push({ name: 'login' });
+      }
     },
+    clickLink(redirect) {
+      if (!this.isLoggedIn) {
+        this.$router.push({ name: 'login', query: { redirect: redirect } });
+      }
+    }
   },
   async mounted () {
       const response = await axios({
